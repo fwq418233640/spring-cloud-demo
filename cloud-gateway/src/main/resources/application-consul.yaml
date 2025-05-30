@@ -1,0 +1,30 @@
+spring:
+  config:
+    import: 'optional:consul:'
+  cloud:
+    consul:
+      host: ${CONSUL_HOST:192.168.8.95}
+      port: ${CONSUL_PORT:8500}
+      config:
+        enabled: true
+        profile-separator: '-'
+        format: yaml
+        data-key: default
+        watch:
+          enabled: true
+          delay: 1000
+        prefixes:
+          - 'config'
+        acl-token: ${MASTER_TOKEN:37e709b89e60d783867834b9698a92d2}
+      discovery:
+        acl-token: ${MASTER_TOKEN:37e709b89e60d783867834b9698a92d2}
+        register: true
+        port: ${server.port}
+        prefer-ip-address: true
+        ip-address: 192.168.8.241
+        metadata:
+          management-context-path: ${server.servlet.context-path}/actuator
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        heartbeat:
+          ttl: 30s
+          enabled: true

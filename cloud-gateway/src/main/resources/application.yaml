@@ -1,0 +1,29 @@
+server:
+  port: 8849
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: cloud-gateway
+  profiles:
+    active: consul,${ENV:dev}
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
+  file:
+    path: ./logs
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      show-values: always
+    health:
+      show-details: ALWAYS
